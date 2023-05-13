@@ -1,5 +1,6 @@
 let userScore = 0;
 let computerScore = 0;
+let winners = [];
 const userScore_span = document.getElementById("user-score");
 const computerScore_span = document.getElementById("computer-score");
 const scoreboard_div = document.querySelector(".score-board");
@@ -25,6 +26,7 @@ function convertToWord(letter) {
 }
 
 function win(userSelection, computerSelection) {
+
     const smallUserWord = "you".fontsize(3).sub();
     const smallComputerWord = "comp".fontsize(3).sub();
     userScore++;
@@ -44,7 +46,11 @@ function win(userSelection, computerSelection) {
         message_p.innerHTML = `One more you're the winner!🏆`;
     }
 
+    return "User";
+
 }
+
+
 
 function lose(userSelection, computerSelection) {
     const smallUserWord = "you".fontsize(3).sub();
@@ -64,7 +70,10 @@ function lose(userSelection, computerSelection) {
     } else if (computerScore === 4) {
         message_p.innerHTML = `It's match point 😬`;
     }
+
+    return "Computer" ;
 }
+
 
 function draw(userSelection, computerSelection) {
     const smallUserWord = "you".fontsize(3).sub();
@@ -73,6 +82,24 @@ function draw(userSelection, computerSelection) {
     document.getElementById(userSelection).classList.add('grey-glow');
     setTimeout(function() { document.getElementById(userSelection).classList.remove('grey-glow') }, 300);
     message_p.innerHTML = `It's a tie`;
+    return "Tie" ;
+}
+
+function tallyWins() {
+  const pWinCount = winners.filter((item) => item == "Player").length;
+  const cWinCount = winners.filter((item) => item == "Computer").length;
+  const ties = winners.filter((item) => item == "Tie").length;
+  document.querySelector(".playerScore").textContent = `Score: ${pWinCount}`;
+  document.querySelector(".computerScore").textContent = `Score: ${cWinCount}`;
+  document.querySelector(".ties").textContent = `Ties: ${ties}`;
+}
+
+
+
+function setWins() {
+  const pWinCount = winners.filter((item) => item == "Player").length;
+  const cWinCount = winners.filter((item) => item == "Computer").length;
+  const ties = winners.filter((item) => item == "Tie").length;
 }
 
 
@@ -97,6 +124,7 @@ function game(userSelection) {
             break;
 
     }
+  
 }
 
 
@@ -114,6 +142,7 @@ function main() {
     scissors_div.addEventListener('click', function() {
         game("s");
     })
+
 }
 
 main();
